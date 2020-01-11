@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use Spatie\Permission\Models\Role;
+use Auth;
 
 class UserController extends Controller
 {
@@ -52,6 +54,7 @@ class UserController extends Controller
 
         $token = JWTAuth::fromUser($user);
         $message = "success";
+        $user->makeHidden(['id','created_at', 'updated_at']);
         return response()->json(compact('user', 'token', 'message'));
     }
 
@@ -71,7 +74,8 @@ class UserController extends Controller
         } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
             return response()->json(['token_is_absent'], $e->getStatusCode());
         }
-
+        $user->assignRole('admin');
         return response()->json(compact('user'));
     }
+
 }

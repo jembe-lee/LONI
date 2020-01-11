@@ -23,5 +23,5 @@ Route::get('open', 'ArticleController@open');
 
 Route::group(['middleware' => 'jwt.verify'], function() {
     Route::get('user', 'UserController@getAuthenticatedUser');
-    Route::get('closed', 'ArticleController@closed');
+    Route::get('closed', 'ArticleController@close');
 });
