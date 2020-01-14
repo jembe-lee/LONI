@@ -11,4 +11,4 @@
 |
 */
 
-Route::get('/', 'UserController@createRole');
+// Route::get('/', 'UserController@createRole');

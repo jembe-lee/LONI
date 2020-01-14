@@ -21,7 +21,7 @@ Route::post('register', 'UserController@register');
 Route::post('login', 'UserController@authenticate');
 Route::get('open', 'ArticleController@open');
 
-Route::group(['middleware' => 'jwt.verify'], function() {
-    Route::get('user', 'UserController@getAuthenticatedUser');
-    Route::get('closed', 'ArticleController@close');
-});
+
+ Route::group(['middleware' => 'jwt.verify', 'auth:api'], function() {
+    Route::resource('articles', 'ArticleController');
+ });
