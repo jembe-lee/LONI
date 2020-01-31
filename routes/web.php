@@ -11,4 +11,5 @@
 |
 */
 
-// Route::get('/', 'UserController@createRole');
+Route::get('/{any}', 'AppController@index')->where('any', '.*');
+
