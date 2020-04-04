@@ -39,6 +39,9 @@
                                                 <div class="mt-4">
                                                     <button class="btn btn-primary btn-block waves-effect waves-light" type="submit">Sign in</button>
                                                 </div>
+                                                <br>
+                                                <p>Already have an account <router-link to="/login"> Login Here</router-link> </p>
+
                                                 
                                             </div>
                                         </div>
