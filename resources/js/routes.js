@@ -11,5 +11,11 @@ export default [
     {path: '/login', component: Login, name:'login'},
     {path: '/profile', component: Profile, name:'profile'},
     {path: '/register', component: Register, name:'register'},
+    {
+        path: '/404',
+        alias:  '*',
+        name: 'notFound',
+        component: () => import(/* webpackChunkName: "notFound" */ "./components/404")
+    },
 
 ]
