@@ -21,6 +21,8 @@
         "vue-template-compiler": "^2.6.11"
     },
     "dependencies": {
+        "acorn": "^7.1.1",
+        "minimist": "^1.2.5",
         "vue": "^2.6.11",
         "vue-auth": "^1.0.0-alpha.1",
         "vue-axios": "^2.1.5",
