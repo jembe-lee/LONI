@@ -22,13 +22,13 @@
 </head>
 
 <body data-sidebar="dark">
-   
+
     <div id="app">
-    <Navbar/>      
+   <App />
     </div>
 
     <div id="app">
-        
+
     </div>
 
 <!-- JAVASCRIPT -->

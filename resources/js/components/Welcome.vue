@@ -1,12 +1,12 @@
 <template>
-    <Navbar></Navbar>
+    <App />
 </template>
 
 <script>
-import Navbar from './Navbar'
+import App from './App'
 export default {
     components: {
-        Navbar
+        App
     }
 }
 </script>

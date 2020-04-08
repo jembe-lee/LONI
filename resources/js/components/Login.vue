@@ -3,7 +3,7 @@
     <div class="account-pages my-5 pt-5">
             <div class="container">
                 <div class="row">
-                    
+
                 </div>
                 <!-- end row -->
 
@@ -13,11 +13,12 @@
                             <div class="card-body p-4">
                                 <div class="p-2">
                                     <h5 class="mb-5 text-center">Login To Your Account</h5>
-                                    <form class="form-horizontal" v-on:submit.prevent="submitLogin()">
+                                    <div class="alert alert-danger" v-if="authStatus">{{ authStatus }}</div>
+                                    <form class="form-horizontal" v-on:submit.prevent="login">
 
                                         <div class="row">
                                             <div class="col-md-12">
-                                                
+
 
                                                 <div class="form-group mt-4">
                                                     <label for="email">Email</label>
@@ -34,7 +35,7 @@
 
                                                 <br>
                                                 <p>Dont have an account <router-link to="/register"> Register Here</router-link> </p>
-                                                
+
                                             </div>
                                         </div>
                                     </form>
@@ -62,27 +63,40 @@ export default {
             loginErrors: {},
         }
     },
+    computed: {
+        authStatus() {
+            return this.$store.getters.authStatus;
+        }
+    },
     methods: {
         // method to login
-        submitLogin() {
-            this.loginError = false;
-            axios.post('api/login', {
-                email: this.email,
-                password: this.password
-            })
-            .then(response => {
-                // after login is successful print data.
-                console.log(response.data.token)
-                store.commit('loginUser')
-                localStorage.setItem('token', response.data.token)
-                // this.$router.push({name: 'article'})
-            }).catch(response => {
-                this.loginError = true
-                this.loginErrors = response.data.errors
-                console.log(this.loginErrors)
-            })
+        // submitLogin() {
+        //     this.loginError = false;
+        //     axios.post('api/login', {
+        //         email: this.email,
+        //         password: this.password
+        //     })
+        //     .then(response => {
+        //         // after login is successful print data.
+        //         // console.log(response.data.token)
+        //         store.commit('loginUser');
+        //         localStorage.setItem('token', response.data.token);
+        //         this.$router.push('/articles')
+        //     }).catch(response => {
+        //         this.loginError = true;
+        //         this.loginErrors = response.data.errors;
+        //         console.log(this.loginErrors)
+        //         localStorage.removeItem('token');
+        //     })
+        // },
+        login: function () {
+            let email = this.email;
+            let password = this.password;
+            this.$store.dispatch('login', {email, password})
+            .then(() => this.$router.push("/articles"))
+            .catch(err => console.log(err))
         }
-        
+
     }
 }
 </script>

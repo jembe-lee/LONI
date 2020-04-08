@@ -7,7 +7,7 @@ import Register from './components/Register'
 
 export default [
     {path: '/', component: Home, name:'home'},
-    {path: '/articles', component: Article, name:'article'},
+    {path: '/articles', component: Article, name:'article', meta: {requiresAuth: true}},
     {path: '/login', component: Login, name:'login'},
     {path: '/profile', component: Profile, name:'profile'},
     {path: '/register', component: Register, name:'register'},

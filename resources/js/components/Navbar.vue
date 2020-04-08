@@ -11,28 +11,45 @@
       <li class="nav-item active">
          <router-link :to="{name: 'home'}" class="nav-link" >home</router-link>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" v-if="!loggedIn">
         <router-link :to="{name: 'login'}" class="nav-link" >Login</router-link>
-       
+
       </li>
-      <li class="nav-item">
-        <router-link :to="{name: 'register'}" class="nav-link" >Register</router-link> 
-     
+      <li class="nav-item" v-if="!loggedIn">
+        <router-link :to="{name: 'register'}" class="nav-link" >Register</router-link>
+
       </li>
- 
+
+        <li class="nav-item" v-if="loggedIn">
+            <router-link :to="{name: 'article'}" class="nav-link" >Articles</router-link>
+
+        </li>
+
+        <li class="nav-item" v-if="loggedIn">
+            <logout></logout>
+
+        </li>
+
+
     </ul>
- 
+
   </div>
 </nav>
 <div>
-    <router-view></router-view>
+
 </div>
     </div>
 
 </template>
 
 <script>
+import Logout from "./Logout";
 export default {
-    
+    components: {Logout},
+    computed: {
+        loggedIn : function () {
+            return this.$store.state.isLoggedIn
+        }
+    }
 }
 </script>
