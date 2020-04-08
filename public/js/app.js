@@ -2059,7 +2059,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Navbar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Navbar */ "./resources/js/components/Navbar.vue");
 //
 //
 //
@@ -2071,29 +2070,204 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      articles: []
+      articles: [],
+      article: [],
+      newArticle: {
+        title: '',
+        body: ''
+      },
+      token: localStorage.getItem('token')
     };
   },
   methods: {
     getArticles: function getArticles() {
       var _this = this;
 
-      axios({
+      this.$http({
         url: 'api/articles/',
-        method: 'GET'
+        method: 'GET',
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
       }).then(function (response) {
         _this.articles = response.data.articles;
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    },
+    getArticle: function getArticle(id) {
+      var _this2 = this;
+
+      this.$http({
+        url: 'api/articles/' + id,
+        method: 'GET',
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        _this2.article = response.data.article;
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    },
+    updateArticle: function updateArticle(id) {
+      var _this3 = this;
+
+      this.$http({
+        url: 'api/articles/' + id,
+        method: 'PUT',
+        data: this.article,
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        _this3.article = response.data.article;
+
+        _this3.getArticles();
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    },
+    deleteArticle: function deleteArticle(id) {
+      var _this4 = this;
+
+      if (confirm("Are you sure you want to delete this article")) {
+        this.$http({
+          url: 'api/articles/' + id,
+          method: 'DELETE',
+          headers: {
+            'Authorization': 'Bearer ' + this.token
+          }
+        }).then(function (response) {
+          _this4.getArticles();
+        })["catch"](function (err) {
+          console.log(err);
+        });
+      }
+    },
+    addArticle: function addArticle() {
+      var _this5 = this;
+
+      this.$http({
+        url: 'api/articles',
+        method: 'POST',
+        data: this.newArticle,
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
         console.log(response.data);
+
+        _this5.getArticles();
       })["catch"](function (err) {
         console.log(err);
       });
     }
   },
-  created: function created() {}
+  created: function created() {
+    this.getArticles();
+  }
 });
 
 /***/ }),
@@ -20051,25 +20225,453 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("h3", [_vm._v("Welcome you have logged ")]),
+  return _c("div", [
+    _c("br"),
+    _vm._v(" "),
+    _vm._m(0),
+    _vm._v(" "),
+    _c("table", { staticClass: "table" }, [
+      _vm._m(1),
       _vm._v(" "),
-      _c("button", { on: { click: _vm.getArticles } }, [
-        _vm._v("Get Articles")
+      _c(
+        "tbody",
+        _vm._l(_vm.articles, function(article, index) {
+          return _c("tr", { key: article.id }, [
+            _c("th", { attrs: { scope: "row" } }, [_vm._v(_vm._s(index + 1))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(article.title))]),
+            _vm._v(" "),
+            _c("td", [
+              _c(
+                "a",
+                {
+                  attrs: {
+                    href: "",
+                    "data-toggle": "modal",
+                    "data-target": "#exampleModal"
+                  },
+                  on: {
+                    click: function($event) {
+                      return _vm.getArticle(article.id)
+                    }
+                  }
+                },
+                [_vm._v("Read More")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  attrs: {
+                    "data-toggle": "modal",
+                    "data-target": "#updateModal"
+                  },
+                  on: {
+                    click: function($event) {
+                      return _vm.getArticle(article.id)
+                    }
+                  }
+                },
+                [_vm._v("Edit")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-danger",
+                  on: {
+                    click: function($event) {
+                      return _vm.deleteArticle(article.id)
+                    }
+                  }
+                },
+                [_vm._v("Delete")]
+              )
+            ])
+          ])
+        }),
+        0
+      )
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "exampleModal",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "exampleModalLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-header" }, [
+                _c(
+                  "h5",
+                  {
+                    staticClass: "modal-title",
+                    attrs: { id: "exampleModalLabel" }
+                  },
+                  [_vm._v(" " + _vm._s(_vm.article.title))]
+                ),
+                _vm._v(" "),
+                _vm._m(2)
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _vm._v(
+                  "\n                        " +
+                    _vm._s(_vm.article.body) +
+                    "\n                        "
+                ),
+                _c("hr"),
+                _vm._v(" "),
+                _c("p", [
+                  _vm._v(
+                    "This Article was written on - " +
+                      _vm._s(_vm.article.created_at)
+                  )
+                ])
+              ])
+            ])
+          ]
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "updateModal",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "updateModalLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(3),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c(
+                  "form",
+                  {
+                    attrs: { method: "put", action: "" },
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return _vm.updateArticle(_vm.article.id)
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "article_title" } }, [
+                        _vm._v("Article Title")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.article.title,
+                            expression: "article.title"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text", id: "article_title" },
+                        domProps: { value: _vm.article.title },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.article, "title", $event.target.value)
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "body" } }, [
+                        _vm._v(" Article Body ")
+                      ]),
+                      _vm._v(" "),
+                      _c("textarea", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.article.body,
+                            expression: "article.body"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { name: "", id: "body", cols: "30", rows: "10" },
+                        domProps: { value: _vm.article.body },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.article, "body", $event.target.value)
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "submit" }
+                      },
+                      [_vm._v("Save")]
+                    )
+                  ]
+                )
+              ])
+            ])
+          ]
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "addModal",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "addModalLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(4),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c(
+                  "form",
+                  {
+                    attrs: { method: "put", action: "" },
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return _vm.addArticle($event)
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "article_title" } }, [
+                        _vm._v("Article Title")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.newArticle.title,
+                            expression: "newArticle.title"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text", id: "article_title" },
+                        domProps: { value: _vm.newArticle.title },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.newArticle,
+                              "title",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "body" } }, [
+                        _vm._v(" Article Body ")
+                      ]),
+                      _vm._v(" "),
+                      _c("textarea", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.newArticle.body,
+                            expression: "newArticle.body"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { name: "", id: "body", cols: "30", rows: "10" },
+                        domProps: { value: _vm.newArticle.body },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.newArticle,
+                              "body",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "submit" }
+                      },
+                      [_vm._v("Save")]
+                    )
+                  ]
+                )
+              ])
+            ])
+          ]
+        )
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "container" }, [
+      _c(
+        "button",
+        {
+          staticClass: " btn btn-primary",
+          attrs: { "data-toggle": "modal", "data-target": "#addModal" }
+        },
+        [_vm._v("Add New Article")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Title")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("View Full")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Edit")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Delete")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "updateModalLabel" } },
+        [_vm._v(" Edit this Article ")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c("h5", { staticClass: "modal-title", attrs: { id: "addModalLabel" } }, [
+        _vm._v(" Edit this Article ")
       ]),
       _vm._v(" "),
-      _vm._l(_vm.articles, function(article) {
-        return _c("li", { key: article.id }, [
-          _vm._v("\n        " + _vm._s(article.title) + "\n    ")
-        ])
-      })
-    ],
-    2
-  )
-}
-var staticRenderFns = []
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  }
+]
 render._withStripped = true
 
 
